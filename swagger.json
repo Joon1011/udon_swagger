@@ -5,12 +5,6 @@
         "version": "1.0.0",
         "description": "프린터 제어 및 디바이스 상태 관리를 위한 API 문서입니다. 디바이스는 서버에 상태를 보고하고, 클라이언트는 프린터로 라벨을 출력할 수 있습니다."
     },
-    "servers": [
-        {
-            "url": "https://www.queue0.com",
-            "description": "개발 서버"
-        }
-    ],
     "tags": [
         {
             "name": "Client API",
