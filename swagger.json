@@ -1,0 +1,279 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "프린터 & 디바이스 제어 API",
+        "version": "1.0.0",
+        "description": "프린터 제어 및 디바이스 상태 관리를 위한 API 문서"
+    },
+    "servers": [
+        {
+            "url": "https://www.queue0.com",
+            "description": "개발 서버"
+        }
+    ],
+    "paths": {
+        "/api/print": {
+            "post": {
+                "summary": "프린터로 라벨 출력",
+                "tags": [
+                    "Printer"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "orderNumber",
+                                    "orderItem"
+                                ],
+                                "properties": {
+                                    "orderNumber": {
+                                        "type": "string",
+                                        "example": "0019"
+                                    },
+                                    "orderItem": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "옛날우동"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "프린팅 성공",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Printing Success"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/device/{deviceUuid}/action/{actionName}/run/{runId}/state": {
+            "post": {
+                "summary": "디바이스 액션 상태 업데이트",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "deviceUuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "디바이스 UUID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "actionName",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "액션 이름"
+                    },
+                    {
+                        "in": "path",
+                        "name": "runId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "실행 ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "runId"
+                                ],
+                                "properties": {
+                                    "runId": {
+                                        "type": "string",
+                                        "example": "30404266-4abc-4e42-9412-485737647eee"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "상태 업데이트 성공",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "RUN"
+                                        },
+                                        "DeviceUuid": {
+                                            "type": "string",
+                                            "example": "30404266-4abc-4e42-9412-485737647eee"
+                                        },
+                                        "ActionName": {
+                                            "type": "string",
+                                            "example": "ActuatorRun"
+                                        },
+                                        "runId": {
+                                            "type": "string",
+                                            "example": "30404266-4abc-4e42-9412-485737647eee"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/device/{deviceUuid}/status": {
+            "post": {
+                "summary": "디바이스 상태 업데이트",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "deviceUuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "디바이스 UUID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "data"
+                                ],
+                                "properties": {
+                                    "data": {
+                                        "type": "object",
+                                        "properties": {
+                                            "status": {
+                                                "type": "string",
+                                                "example": "ready"
+                                            },
+                                            "outlet": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "boolean"
+                                                },
+                                                "example": [
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false,
+                                                    false
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "timestamp": {
+                                        "type": "number",
+                                        "example": 1733441559650
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "상태 업데이트 성공",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "messageId": {
+                                                    "type": "string",
+                                                    "example": "1736303186630-0"
+                                                }
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "ready"
+                                        },
+                                        "outlet": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "boolean"
+                                            },
+                                            "example": [
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false,
+                                                false
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
