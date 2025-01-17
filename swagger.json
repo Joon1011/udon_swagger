@@ -20,7 +20,7 @@
             "post": {
                 "summary": "[클라이언트용] 프린터로 라벨 출력 요청",
                 "tags": [
-                    "Client API"
+                    "Client API."
                 ],
                 "requestBody": {
                     "required": true,
